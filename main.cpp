@@ -26,14 +26,15 @@ bool userIsMark;
 
 //preload base data
 void loadData(){
-    markPokemon.push_back(pokemon("Eevee",55,55,50));
-    markPokemon.push_back(pokemon("Rowlet",68,55,55));
-    markPokemon.push_back(pokemon("Cyndaquil",39,52,43));
-    markPokemon.push_back(pokemon("Zorua",40,65,40));
-    markPokemon.push_back(pokemon("Bulbasaur",45,49,49));
-    markPokemon.push_back(pokemon("Oshawott",55,55,45));
-    markPokemon.push_back(pokemon("Fennekin",40,45,40));
-    markPokemon.push_back(pokemon("Sneasel",55,95,55));
+    markPokemon.push_back(pokemon("MarkEevee",55,55,50));
+    markPokemon.push_back(pokemon("MarkRowlet",68,55,55));
+    markPokemon.push_back(pokemon("MarkCyndaquil",39,52,43));
+    markPokemon.push_back(pokemon("MarkZorua",40,65,40));
+    markPokemon.push_back(pokemon("MarkBulbasaur",45,49,49));
+    markPokemon.push_back(pokemon("MarkOshawott",55,55,45));
+    markPokemon.push_back(pokemon("MarkFennekin",40,45,40));
+    markPokemon.push_back(pokemon("MarkSneasel",55,95,55));
+
     userPokemon.push_back(pokemon("Eevee",55,55,50));
     userPokemon.push_back(pokemon("Rowlet",68,55,55));
     userPokemon.push_back(pokemon("Cyndaquil",39,52,43));
@@ -46,29 +47,29 @@ void loadData(){
 
 //view a select pokemon's stats
 void viewPokemon(int index){
-    if(!userIsMark){
-        std::cout << userPokemon.at(index).name << " " << std::endl;
-        std::cout << "HP: " << userPokemon.at(index).HP << " " << std::endl;
-        std::cout << "Attack: " << userPokemon.at(index).attack << " " << std::endl;
-        std::cout << "Defense: " << userPokemon.at(index).defense << " " << std::endl;
-    } else {
+    if(userIsMark){
         std::cout << markPokemon.at(index).name << " " << std::endl;
         std::cout << "HP: " << markPokemon.at(index).HP << " " << std::endl;
         std::cout << "Attack: " << markPokemon.at(index).attack << " " << std::endl;
         std::cout << "Defense: " << markPokemon.at(index).defense << " " << std::endl;
+    } else {
+        std::cout << userPokemon.at(index).name << " " << std::endl;
+        std::cout << "HP: " << userPokemon.at(index).HP << " " << std::endl;
+        std::cout << "Attack: " << userPokemon.at(index).attack << " " << std::endl;
+        std::cout << "Defense: " << userPokemon.at(index).defense << " " << std::endl;
     }
     std::cout << "\n";
 }
 
 //dispay list of all Pokemon
 void viewList(){
-    if(!userIsMark){
-        for(int i=0;i<userPokemon.size();i++){
-            std::cout << (i+1) << ") " + userPokemon.at(i).name << std::endl;
-        }
-    } else {
+    if(userIsMark){
         for(int i=0;i<markPokemon.size();i++){
             std::cout << (i+1) << ") " + markPokemon.at(i).name << std::endl;
+        }
+    } else {
+        for(int i=0;i<userPokemon.size();i++){
+            std::cout << (i+1) << ") " + userPokemon.at(i).name << std::endl;
         }
     }
 
@@ -77,16 +78,16 @@ void viewList(){
 
 //edit a select pokemon's stats
 void editPokemon(int index){
-    if(!userIsMark){
-        std::cout << userPokemon.at(index).name << std::endl;
-        std::cout << "HP: " << userPokemon.at(index).HP << std::endl;
-        std::cout << "Attack: " << userPokemon.at(index).attack << std::endl;
-        std::cout << "Defense: " << userPokemon.at(index).defense << std::endl;
-    } else {
+    if(userIsMark){
         std::cout << markPokemon.at(index).name << std::endl;
         std::cout << "HP: " << markPokemon.at(index).HP << std::endl;
         std::cout << "Attack: " << markPokemon.at(index).attack << std::endl;
         std::cout << "Defense: " << markPokemon.at(index).defense << std::endl;
+    } else {
+        std::cout << userPokemon.at(index).name << std::endl;
+        std::cout << "HP: " << userPokemon.at(index).HP << std::endl;
+        std::cout << "Attack: " << userPokemon.at(index).attack << std::endl;
+        std::cout << "Defense: " << userPokemon.at(index).defense << std::endl;
     }
     //Choose which stat to edit
     std::cout << "Enter which stat you would like to edit ( [1]-HP, [2]-Attack, [3]-Defense) followed by a space and a new value\n"
@@ -102,32 +103,32 @@ void editPokemon(int index){
         str_strm >> statChange;
         //remove fainted pokemon
         if(statChange == -1 && statIndex == 1){
-            if(!userIsMark)
-                userPokemon.erase(userPokemon.begin()+index);
-            else
+            if(userIsMark)
                 markPokemon.erase(markPokemon.begin()+index);
+            else
+                userPokemon.erase(userPokemon.begin()+index);
         }
             //make the change in stat
         else switch(statIndex){
                 case 1:
-                    if(!userIsMark){
-                        userPokemon.at(index).HP = statChange;
-                    } else {
+                    if(userIsMark){
                         markPokemon.at(index).HP = statChange;
+                    } else {
+                        userPokemon.at(index).HP = statChange;
                     }
                     break;
                 case 2:
-                    if(!userIsMark){
-                        userPokemon.at(index).attack = statChange;
-                    } else {
+                    if(userIsMark){
                         markPokemon.at(index).attack = statChange;
+                    } else {
+                        userPokemon.at(index).attack = statChange;
                     }
                     break;
                 case 3:
-                    if(!userIsMark){
-                        userPokemon.at(index).defense = statChange;
-                    } else {
+                    if(userIsMark){
                         markPokemon.at(index).defense = statChange;
+                    } else {
+                        userPokemon.at(index).defense = statChange;
                     }
                     break;
                 default:
@@ -144,7 +145,47 @@ void battle(){
     std::vector<pokemon> userteam;
 
     //select team to attack with
-    if(!userIsMark){
+    if(userIsMark){
+        viewList();
+        std::cout << "please enter the 3 indexes of your chosen battle pokemon with a space in between" << std::endl;
+        int choice = -1;
+        for(int i=0;i<3;){
+            std::cin >> choice;
+            if(choice < 1 || choice > markPokemon.size())
+                std::cout << "Please enter a valid index" << std::endl;
+            else{
+                bool chosenAlready = false;
+                for(int j=0;j<markteam.size();j++){
+                    if(markteam.at(i).name == markPokemon.at(choice-1).name) {
+                        chosenAlready = true;
+                        std::cout << "Please select a new pokemon. This one is already on your team" << std::endl;
+                        break;
+                    }
+                }
+                if(!chosenAlready){
+                    markteam.push_back(pokemon(markPokemon.at(choice-1).name, markPokemon.at(choice-1).HP, markPokemon.at(choice-1).attack, markPokemon.at(choice-1).defense));
+                    i++;
+                }
+            }
+        }
+        //select opponent's team
+        for(int i=0;i<3;){
+            choice = rand()%userPokemon.size();
+            bool chosenAlready = false;
+            for(int j=0;j<userteam.size();j++){
+                if(userteam.at(j).name == userPokemon.at(choice-1).name) {
+                    chosenAlready = true;
+                    std::cout << "Please select a new pokemon. This one is already on your team" << std::endl;
+                    break;
+                }
+            }
+            if(!chosenAlready) {
+                userteam.push_back(pokemon(userPokemon.at(choice - 1).name, userPokemon.at(choice - 1).HP,
+                                           userPokemon.at(choice - 1).attack, userPokemon.at(choice - 1).defense));
+                i++;
+            }
+        }
+    } else {
         viewList();
         std::cout << "please enter the 3 indexes of your chosen battle pokemon with a space in between" << std::endl;
         int choice = -1;
@@ -185,46 +226,6 @@ void battle(){
                 i++;
             }
         }
-    } else {
-        viewList();
-        std::cout << "please enter the 3 indexes of your chosen battle pokemon with a space in between" << std::endl;
-        int choice = -1;
-        for(int i=0;i<3;){
-            std::cin >> choice;
-            if(choice < 1 || choice > markPokemon.size())
-                std::cout << "Please enter a valid index" << std::endl;
-            else{
-                bool chosenAlready = false;
-                for(int j=0;j<markteam.size();j++){
-                    if(markteam.at(i).name == markPokemon.at(choice-1).name) {
-                        chosenAlready = true;
-                        std::cout << "Please select a new pokemon. This one is already on your team" << std::endl;
-                        break;
-                    }
-                }
-                if(!chosenAlready){
-                    markteam.push_back(pokemon(markPokemon.at(choice-1).name, markPokemon.at(choice-1).HP, markPokemon.at(choice-1).attack, markPokemon.at(choice-1).defense));
-                    i++;
-                }
-            }
-        }
-        //select opponent's team
-        for(int i=0;i<3;){
-            choice = rand()%userPokemon.size();
-            bool chosenAlready = false;
-            for(int j=0;j<userteam.size();j++){
-                if(userteam.at(j).name == userPokemon.at(choice-1).name) {
-                    chosenAlready = true;
-                    std::cout << "Please select a new pokemon. This one is already on your team" << std::endl;
-                    break;
-                }
-            }
-            if(!chosenAlready) {
-                userteam.push_back(pokemon(userPokemon.at(choice - 1).name, userPokemon.at(choice - 1).HP,
-                                           userPokemon.at(choice - 1).attack, userPokemon.at(choice - 1).defense));
-                i++;
-            }
-        }
     }
 
     //Battle until one person's pokemon are destroyed
@@ -233,51 +234,24 @@ void battle(){
         std::cout << "Please select which pokemon to attack with : " << std::endl;
         int pokeChoice = -1;
         int opponentChoice = -1;
-        if(!userIsMark){
-            for(int i=0;i<userteam.size();i++){
-                std::cout << "[" << i << "]"<< userteam.at(i).name << " - HP: " << (userteam.at(i).HP) << std::endl;
-            }
-            std::cin >> pokeChoice;
-            opponentChoice = rand() % markteam.size();
-        } else {
+        if(userIsMark){
             for(int i=0;i<markteam.size();i++){
                 std::cout << "[" << i << "]" << markteam.at(i).name << " - HP: " << markteam.at(i).HP << std::endl;
             }
             std::cin >> pokeChoice;
             opponentChoice = rand() % userteam.size();
+        } else {
+            for(int i=0;i<userteam.size();i++){
+                std::cout << "[" << i << "]"<< userteam.at(i).name << " - HP: " << (userteam.at(i).HP) << std::endl;
+            }
+            std::cin >> pokeChoice;
+            opponentChoice = rand() % markteam.size();
         }
         //damage dealt is going to be att * att / (att + def)
         int damageDealt = -1;
         bool victory = false;
         //user pokemon attack first
-        if(!userIsMark){
-            //display battle stats
-            std::cout << userteam.at(pokeChoice).name << "-" << userteam.at(pokeChoice).HP << " vs. " <<
-                      markteam.at(opponentChoice).name << "-" << markteam.at(opponentChoice).HP << std::endl;
-
-            //calculate damage dealt
-            damageDealt = (userteam.at(pokeChoice).attack*userteam.at(pokeChoice).attack)/(userteam.at(pokeChoice).attack+markteam.at(opponentChoice).defense);
-            markteam.at(opponentChoice).HP -= damageDealt;
-            if(markteam.at(opponentChoice).HP <= 0){
-                std::cout << "You defeated your opponent's pokemon!" << std::endl;
-                markteam.erase(markteam.begin()+opponentChoice);
-                victory = true;
-            } else {
-                std::cout << "You dealt " << damageDealt << " damage to your opponent's pokemon" << std::endl;
-            }
-
-            //calculate damage recieved
-            if(!victory){
-                damageDealt = (markteam.at(opponentChoice).attack*markteam.at(opponentChoice).attack)/(markteam.at(opponentChoice).attack+userteam.at(pokeChoice).defense);
-                userteam.at(pokeChoice).HP -= damageDealt;
-                if(userteam.at(pokeChoice).HP <= 0){
-                    std::cout << "Your pokemon was defeated!" << std::endl;
-                    userteam.erase(userteam.begin()+pokeChoice);
-                } else {
-                    std::cout << "You suffered " << damageDealt << " damage from your opponent's pokemon" << std::endl;
-                }
-            }
-        } else {
+        if(userIsMark){
             //display battle stats
             std::cout << userteam.at(opponentChoice).name << "-" << userteam.at(opponentChoice).HP << " vs. " <<
                       markteam.at(pokeChoice).name << "-" << markteam.at(pokeChoice).HP << std::endl;
@@ -304,6 +278,33 @@ void battle(){
                     std::cout << "You suffered " << damageDealt << " damage from your opponent's pokemon";
                 }
             }
+        } else {
+            //display battle stats
+            std::cout << userteam.at(pokeChoice).name << "-" << userteam.at(pokeChoice).HP << " vs. " <<
+                      markteam.at(opponentChoice).name << "-" << markteam.at(opponentChoice).HP << std::endl;
+
+            //calculate damage dealt
+            damageDealt = (userteam.at(pokeChoice).attack*userteam.at(pokeChoice).attack)/(userteam.at(pokeChoice).attack+markteam.at(opponentChoice).defense);
+            markteam.at(opponentChoice).HP -= damageDealt;
+            if(markteam.at(opponentChoice).HP <= 0){
+                std::cout << "You defeated your opponent's pokemon!" << std::endl;
+                markteam.erase(markteam.begin()+opponentChoice);
+                victory = true;
+            } else {
+                std::cout << "You dealt " << damageDealt << " damage to your opponent's pokemon" << std::endl;
+            }
+
+            //calculate damage recieved
+            if(!victory){
+                damageDealt = (markteam.at(opponentChoice).attack*markteam.at(opponentChoice).attack)/(markteam.at(opponentChoice).attack+userteam.at(pokeChoice).defense);
+                userteam.at(pokeChoice).HP -= damageDealt;
+                if(userteam.at(pokeChoice).HP <= 0){
+                    std::cout << "Your pokemon was defeated!" << std::endl;
+                    userteam.erase(userteam.begin()+pokeChoice);
+                } else {
+                    std::cout << "You suffered " << damageDealt << " damage from your opponent's pokemon" << std::endl;
+                }
+            }
         }
     }
     //determine results
@@ -316,8 +317,8 @@ void battle(){
 
 int main () {
     loadData();
-    bool mark = false;
     char test[] = "hello";
+    bool mark = false;
     char help[4];
     int decision;
     int failures = 0;

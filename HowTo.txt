@@ -7,7 +7,7 @@ Exploitation
 
 
 	From here, we are able to create a buffer overflow because the variable which sets whether the user is Mark is directly below the char[] input for the assisted selection section. After inputting 4 characters, we can input any characters to overflow into the Boolean mark and transform it into True. We now have access to all of Mark’s Pokemon.
-view asdkflajg
+viewAAAAAAAAAAAAAAAAAA
 	Now that we have access to Mark’s data, we need to delete his pokemon. We can direct our attention to the edit Pokemon function, where we have the capability to delete a Pokemon from the list if the Pokemon’s HP is changed to -1. Since we cannot simply enter a negative number to remove the Pokemon, we must take advantage of the fact that the Integer is checked as a Char array before being converted to an integer. By creating an integer overflow by entering 4294967295 as the value, the Integer is not big enough to handle it, and it overflows to -1. This causes the removal code to be executed this. From here all of Mark’s Pokemon can be deleted. 
 1 4294967295
 
