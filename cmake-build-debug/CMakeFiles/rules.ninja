@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files\JetBrains\CLion 2021.3.2\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -S"C:\Users\katie\Documents\GitHub\Cyber Security\BufferOverflow" -B"C:\Users\katie\Documents\GitHub\Cyber Security\BufferOverflow\cmake-build-debug"
+  command = "C:\Program Files\JetBrains\CLion 2021.3.2\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -S"C:\Users\katie\Documents\GitHub\Cyber Security\BufferOverflow\PokemonBattle" -B"C:\Users\katie\Documents\GitHub\Cyber Security\BufferOverflow\PokemonBattle\cmake-build-debug"
   description = Re-running CMake...
   generator = 1
 

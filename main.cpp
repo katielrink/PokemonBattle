@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <stdio.h>
+#include <string.h>
+#include <sstream>
 
 //basic pokemon structure
 class pokemon{
@@ -23,13 +26,13 @@ bool userIsMark;
 
 //preload base data
 void loadData(){
-//    markPokemon.push_back(pokemon("Eevee",55,55,50));
-//    markPokemon.push_back(pokemon("Rowlet",68,55,55));
-//    markPokemon.push_back(pokemon("Cyndaquil",39,52,43));
-//    markPokemon.push_back(pokemon("Zorua",40,65,40));
-//    markPokemon.push_back(pokemon("Bulbasaur",45,49,49));
-//    markPokemon.push_back(pokemon("Oshawott",55,55,45));
-//    markPokemon.push_back(pokemon("Fennekin",40,45,40));
+    markPokemon.push_back(pokemon("Eevee",55,55,50));
+    markPokemon.push_back(pokemon("Rowlet",68,55,55));
+    markPokemon.push_back(pokemon("Cyndaquil",39,52,43));
+    markPokemon.push_back(pokemon("Zorua",40,65,40));
+    markPokemon.push_back(pokemon("Bulbasaur",45,49,49));
+    markPokemon.push_back(pokemon("Oshawott",55,55,45));
+    markPokemon.push_back(pokemon("Fennekin",40,45,40));
     markPokemon.push_back(pokemon("Sneasel",55,95,55));
     userPokemon.push_back(pokemon("Eevee",55,55,50));
     userPokemon.push_back(pokemon("Rowlet",68,55,55));
@@ -40,20 +43,6 @@ void loadData(){
     userPokemon.push_back(pokemon("Fennekin",40,45,40));
     userPokemon.push_back(pokemon("Sneasel",55,95,55));
 }
-
-
-//dispay list of all Pokemon
-void viewList(){
-    if(!userIsMark){
-        for(int i=0;i<userPokemon.size();i++){
-            std::cout << (i+1) << ") " + userPokemon.at(i).name << std::endl;
-        }
-    } else {
-        for(int i=0;i<markPokemon.size();i++){
-            std::cout << (i+1) << ") " + markPokemon.at(i).name << std::endl;
-        }
-    }
-};
 
 //view a select pokemon's stats
 void viewPokemon(int index){
@@ -68,69 +57,85 @@ void viewPokemon(int index){
         std::cout << "Attack: " << markPokemon.at(index).attack << " " << std::endl;
         std::cout << "Defense: " << markPokemon.at(index).defense << " " << std::endl;
     }
+    std::cout << "\n";
 }
+
+//dispay list of all Pokemon
+void viewList(){
+    if(!userIsMark){
+        for(int i=0;i<userPokemon.size();i++){
+            std::cout << (i+1) << ") " + userPokemon.at(i).name << std::endl;
+        }
+    } else {
+        for(int i=0;i<markPokemon.size();i++){
+            std::cout << (i+1) << ") " + markPokemon.at(i).name << std::endl;
+        }
+    }
+
+    std::cout << "\n";
+};
 
 //edit a select pokemon's stats
 void editPokemon(int index){
     if(!userIsMark){
-        std::cout << userPokemon.at(index).name << ":: " << std::endl;
-        std::cout << "HP: " << userPokemon.at(index).HP << ":: " << std::endl;
-        std::cout << "Attack: " << userPokemon.at(index).attack << ":: " << std::endl;
-        std::cout << "Defense: " << userPokemon.at(index).defense << ":: " << std::endl;
+        std::cout << userPokemon.at(index).name << std::endl;
+        std::cout << "HP: " << userPokemon.at(index).HP << std::endl;
+        std::cout << "Attack: " << userPokemon.at(index).attack << std::endl;
+        std::cout << "Defense: " << userPokemon.at(index).defense << std::endl;
     } else {
-        std::cout << markPokemon.at(index).name << ":: " << std::endl;
-        std::cout << "HP: " << markPokemon.at(index).HP << ":: " << std::endl;
-        std::cout << "Attack: " << markPokemon.at(index).attack << ":: " << std::endl;
-        std::cout << "Defense: " << markPokemon.at(index).defense << ":: " << std::endl;
+        std::cout << markPokemon.at(index).name << std::endl;
+        std::cout << "HP: " << markPokemon.at(index).HP << std::endl;
+        std::cout << "Attack: " << markPokemon.at(index).attack << std::endl;
+        std::cout << "Defense: " << markPokemon.at(index).defense << std::endl;
     }
     //Choose which stat to edit
-    std::cout << "Which stat would you like to edit? [1]-HP, [2]-Attack, [3]-Defense" << std::endl;
+    std::cout << "Enter which stat you would like to edit ( [1]-HP, [2]-Attack, [3]-Defense) followed by a space and a new value\n"
+              << "The new stat value must be greater than 2."<< std::endl;
     int statIndex = -1;
-    std::cin >> statIndex;
-    //Choose how to change stat
-    std::cout << "What would you like the new stat to be?" << std::endl;
-    int statChange = -1;
-        std::cin >> statChange;
-    //make the change in stat
-    switch(statIndex){
-        case 1:
-            if(!userIsMark){
-                userPokemon.at(index).HP = statChange;
-            } else {
-                markPokemon.at(index).HP = statChange;
-            }
-            break;
-        case 2:
-            if(!userIsMark){
-                userPokemon.at(index).attack = statChange;
-            } else {
-                markPokemon.at(index).attack = statChange;
-            }
-            break;
-        case 3:
-            if(!userIsMark){
-                userPokemon.at(index).defense = statChange;
-            } else {
-                markPokemon.at(index).defense = statChange;
-            }
-            break;
-        default:
-            std::cout << "Please Enter a valid number 0-3" << std::endl;
-    }
-}
-
-//reset all pokemon, so you have a blank slate
-void reset(){
-    if(!userIsMark){
-        while(!userPokemon.empty()){
-            userPokemon.pop_back();
+    char readIn[64];
+    unsigned int statChange = -1;
+    std::cin >> statIndex >> readIn;
+    //ensure value is big enough
+    if(strcmp(readIn, "0") != 0 && strcmp(readIn, "1") != 0 && strcmp(readIn, "2") != 0 && readIn[0] != '-'){
+        //convert from input to tangable integer
+        std::stringstream str_strm(readIn);
+        str_strm >> statChange;
+        //remove fainted pokemon
+        if(statChange == -1 && statIndex == 1){
+            if(!userIsMark)
+                userPokemon.erase(userPokemon.begin()+index);
+            else
+                markPokemon.erase(markPokemon.begin()+index);
         }
-    } else {
-        while(!markPokemon.empty()){
-            markPokemon.pop_back();
-        }
+            //make the change in stat
+        else switch(statIndex){
+                case 1:
+                    if(!userIsMark){
+                        userPokemon.at(index).HP = statChange;
+                    } else {
+                        markPokemon.at(index).HP = statChange;
+                    }
+                    break;
+                case 2:
+                    if(!userIsMark){
+                        userPokemon.at(index).attack = statChange;
+                    } else {
+                        markPokemon.at(index).attack = statChange;
+                    }
+                    break;
+                case 3:
+                    if(!userIsMark){
+                        userPokemon.at(index).defense = statChange;
+                    } else {
+                        markPokemon.at(index).defense = statChange;
+                    }
+                    break;
+                default:
+                    std::cout << "Please Enter a valid number 0-3" << std::endl;
+            }
+    } else{
+        std::cout << "Value is too low....\n" << std::endl;
     }
-    std::cout << "reset done!" << std::endl;
 }
 
 //simulate battle between you and your opponent
@@ -248,7 +253,7 @@ void battle(){
         if(!userIsMark){
             //display battle stats
             std::cout << userteam.at(pokeChoice).name << "-" << userteam.at(pokeChoice).HP << " vs. " <<
-                markteam.at(opponentChoice).name << "-" << markteam.at(opponentChoice).HP << std::endl;
+                      markteam.at(opponentChoice).name << "-" << markteam.at(opponentChoice).HP << std::endl;
 
             //calculate damage dealt
             damageDealt = (userteam.at(pokeChoice).attack*userteam.at(pokeChoice).attack)/(userteam.at(pokeChoice).attack+markteam.at(opponentChoice).defense);
@@ -311,24 +316,68 @@ void battle(){
 
 int main () {
     loadData();
-    int decision = -1;
+    bool mark = false;
+    char test[] = "hello";
+    char help[4];
+    int decision;
+    int failures = 0;
+
     while(decision != 4){
-        std::cout << "Please select an option of what you would like to do:" << std::endl;
-        std::cout << "[0] View Pokemon List:" << std::endl;
-        std::cout << "[1] View a Pokemon Stats:" << std::endl;
-        std::cout << "[2] Edit a Pokemon" << std::endl;
-        std::cout << "[3] Battle Mark" << std::endl;
-        std::cout << "[4] Exit" << std::endl;
-        std::cin >> decision;
+        userIsMark = mark;
 
-        userIsMark = false;
+        if(failures <= 5){
+            std::cout << "Please select an option of what you would like to do:" << std::endl;
+            std::cout << "[0] View Pokemon List" << std::endl;
+            std::cout << "[1] View a Pokemon Stats" << std::endl;
+            std::cout << "[2] Edit a Pokemon" << std::endl;
+            std::cout << "[3] Battle Mark" << std::endl;
+            std::cout << "[4] Exit" << std::endl;
 
-        //catch any non-integer entries
-        while(std::cin.fail()) {
-            std::cout << "Please enter a valid integer between 0-4" << std::endl;
-            std::cin.clear();
-            std::cin.ignore(256,'\n');
             std::cin >> decision;
+
+            //catch any non-integer entries
+            while(std::cin.fail()) {
+                std::cout << "Please enter a valid integer between 0-4" << std::endl;
+                std::cin.clear();
+                std::cin.ignore(256,'\n');
+                std::cin >> decision;
+                failures++;
+                if(failures > 5)
+                    break;
+            }
+        }
+            //Activate Assist to help
+        else{
+            bool selected = false;
+            while(!selected){
+                std::cin.clear();
+                std::cin.ignore(256,'\n');
+                std::cout << "\n\n\n\n\n\n\nVERBAL HELP: Simply enter the name of the option you would like" << std::endl;
+                std::cout << "To view pokemon enter view\nTo view stats enter stat\nTo edit a pokemon enter edit\nTo battle enter mark\nTo exit enter exit" << std::endl;
+                std::cin >> help;
+                if(strcmp(help, "view") == 0){
+                    decision = 0;
+                    selected = true;
+                }
+                else if(strcmp(help, "stat") == 0){
+                    decision = 1;
+                    selected = true;
+                }
+                else if(strcmp(help, "edit") == 0){
+                    decision = 2;
+                    selected = true;
+                }
+                else if(strcmp(help, "mark") == 0){
+                    decision= 3;
+                    selected = true;
+                }
+                else if(strcmp(help, "exit") == 0){
+                    decision = 4;
+                    selected = true;
+                }
+                else
+                    std::cout << "Invalid Input. Try again." << std::endl;
+            }
         }
 
         switch(decision){
@@ -363,6 +412,7 @@ int main () {
             }
             default: {
                 std::cout << "Please Enter a valid number 0-4" << std::endl;
+                failures++;
             }
         }
     }
